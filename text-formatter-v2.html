@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    	.editRegion {
+    		margin-bottom: 20px;
+    	}
+    </style>
+    <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+    <script src="http://willemmulder.github.io/FilteredPaste.js/js/jquery-filteredPaste.js"></script>
+</head>
+
+<body>
+    <div id="container">
+    	<div class="editable-region">
+			<h2>Title</h2>
+			<div class='title' contenteditable=true ></div>
+			<h2>Subtitle</h2>
+			<div class='subtitle' contenteditable=true ></div>
+			<h2>Detail</h2>
+			<div class='detail' contenteditable=true ></div>
+		</div>
+		
+
+		
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tr class="main" style="background-color: #ffffff">
+                <td style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-line-height-rule: exactly; line-height: 4px; font-size: 4px; height: 4px; background-color: #ffffff;">
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td height="1" valign="top">
+                    <div id="title" class="titleContent" style="font-family: arial, helvetica, sans-serif; font-size: 24px; color: rgb(0, 0, 0); mso-line-height-rule:exactly; line-height: 1; font-weight: bold; font-style: normal;">
+                       
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td height="1" valign="top">
+                    <div id="subtitle" class="subtitleContent" style="font-family: arial, helvetica, sans-serif; font-size: 18px; color: rgb(0, 0, 0); mso-line-height-rule:exactly; line-height: 20px; font-style: normal;">
+                        <p style="margin-top: 5px; margin-bottom: 5px;">
+                        
+                        </p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td height="1" valign="top">
+                    <div id="detail" class="detailContent">
+                        
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+		
+	<script type="text/javascript">
+		
+		
+
+		//const originalTitle = getTextNodesIn(document.getElementById("title")),
+		originalTitleChildHTML = `<p style="margin-top: 5px; margin-bottom: 5px;">Dietland Screening and Conversation and more Text to make it longer</p>`;
+		//originalSubTitle  = getTextNodesIn(document.getElementById("subtitle")),
+		originalSubTitleChildHTML = `<p style="margin-top: 5px; margin-bottom: 5px;">
+                            			<span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 18px; mso-line-height-rule:exactly; line-height: 20px; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            			</span>
+                            		</p>`;
+		//originalDetail = getTextNodesIn(document.getElementById("detail")),
+		originalDetailChildHTML = `<p style="margin-top: 5px; margin-bottom: 5px;">
+                            		<span style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vehicula volutpat urna at placerat. Proin et velit et sem pulvinar scelerisque non eget magna. Pellentesque massa purus, placerat vitae facilisis et, vulputate id lorem.&nbsp;</span>
+                            		</p>`;
+
+		
+         document.getElementById("title").innerHTML = originalTitleChildHTML;
+         document.getElementById("subtitle").innerHTML = originalSubTitleChildHTML;
+         document.getElementById("detail").innerHTML = originalDetailChildHTML;
+
+         $editables = $('[contenteditable=true]');
+
+         $editables.filteredPaste({
+             "filters" : {
+                 "default" : { 
+                     options : { "tags" : { "*" : { "attributes" : ["strong","em", "a"] }}}
+                 }
+             }
+         }); 
+
+         $editables.on('keyup',function(e){
+         	let selection = window.getSelection(),
+         	newText = selection.focusNode.data,
+         	targetInput = selection.focusNode.parentNode,
+         	targetInputName = selection.focusNode.parentNode.className,
+         	targetArea = document.getElementById(targetInputName);
+         	textNode = getTextNodesIn(targetArea);
+
+         	$(textNode).parent().text(newText);
+
+         	//console.log(e.currentTarget.className);
+         	console.log(targetArea);
+         	
+         	if(newText === "") {
+				switch(targetInputName) {
+					case "title":
+						targetArea.innerHTML = originalTitleChildHTML;
+						break;
+					case "subtitle":
+						targetArea.innerHTML = originalSubTitleChildHTML;
+						break;
+					case "detail":
+						targetArea.innerHTML = originalDetailChildHTML;
+						break;
+					default:
+						break;
+				}
+			}
+         });
+
+
+         function getTextNodesIn(node, includeWhitespaceNodes) {
+ 	    	var textNodes = [], nonWhitespaceMatcher = /\S/;
+
+			function getTextNodes(node) {
+					// if(node == null) {
+					// 	return
+					// }
+				    if (node.nodeType == 3) {
+				        if (includeWhitespaceNodes || nonWhitespaceMatcher.test(node.nodeValue)) {
+				            textNodes.push(node);
+				        }
+				    } else {
+				        for (var i = 0, len = node.childNodes.length; i < len; ++i) {
+				            getTextNodes(node.childNodes[i]);
+				        }
+				    }
+				}
+
+			getTextNodes(node);
+			return textNodes;
+		}
+
+		// const delegate = (selector) => (cb) => (e) => e.target.matches(selector) && cb(e);
+
+		// const inputDelegate = delegate('textarea');
+
+		// container.addEventListener('keyup', inputDelegate((el) => {
+		// 	let newText = el.target.value,
+		// 	targetInput = el.target.name,
+		// 	targetArea = document.getElementById(targetInput),
+		// 	textNode = getTextNodesIn(targetArea);
+
+		// 	$(textNode).parent().text(newText);
+			
+		// }));
+
+		
+	</script>
+</body>
+
+</html>
