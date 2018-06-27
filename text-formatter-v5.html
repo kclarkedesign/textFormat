@@ -1,305 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <style>
-    	.editRegion {
-    		margin-bottom: 20px;
-    	}
-    </style>
-    <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
-    <script src="http://willemmulder.github.io/FilteredPaste.js/js/jquery-filteredPaste.js"></script>
-</head>
+	<head>
+	    <meta charset="UTF-8">
+	    <title>Document</title>
+	    <style>
+	    .editRegion {
+	        margin-bottom: 20px;
+	    }
+	    </style>
+	    <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+	    <script src="http://willemmulder.github.io/FilteredPaste.js/js/jquery-filteredPaste.js"></script>
+	</head>
 
-<body>
-    <div id="container">
-    	<div class="editable-region">
-			<h2>Title</h2>
-			<div class='title' contenteditable=true ></div>
-			<h2>Subtitle</h2>
-			<div class='subtitle' contenteditable=true ></div>
-			<h2>Detail</h2>
-			<div class='detail' contenteditable=true ></div>
-		</div>
-		
-
-		
-        <table cellpadding="0" cellspacing="0" width="100%">
-            <tr class="main" style="background-color: #ffffff">
-                <td style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-line-height-rule: exactly; line-height: 4px; font-size: 4px; height: 4px; background-color: #ffffff;">
-                    &nbsp;</td>
-            </tr>
-            <tr>
-                <td height="1" valign="top">
-                    <div id="title" class="titleContent" style="font-family: arial, helvetica, sans-serif; font-size: 24px; color: rgb(0, 0, 0); mso-line-height-rule:exactly; line-height: 1; font-weight: bold; font-style: normal;">
-                       
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td height="1" valign="top">
-                    <div id="subtitle" class="subtitleContent" style="font-family: arial, helvetica, sans-serif; font-size: 18px; color: rgb(0, 0, 0); mso-line-height-rule:exactly; line-height: 20px; font-style: normal;">
-                        <p style="margin-top: 5px; margin-bottom: 5px;">
-                        
-                        </p>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td height="1" valign="top">
-                    <div id="detail" class="detailContent">
-                        
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-		
-	<script type="text/javascript">
-		//const originalTitle = getTextNodesIn(document.getElementById("title")),
-		originalTitleChildHTML = `<p class="target-parent" style="margin-top: 5px; margin-bottom: 5px;">Dietland Screening and Conversation and more Text to make it longer</p>`;
-		//originalSubTitle  = getTextNodesIn(document.getElementById("subtitle")),
-		originalSubTitleChildHTML = `<p style="margin-top: 5px; margin-bottom: 5px;">
-                            			<span class="target-parent" style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 18px; mso-line-height-rule:exactly; line-height: 20px; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            			</span>
-                            		</p>`;
-		//originalDetail = getTextNodesIn(document.getElementById("detail")),
-		originalDetailChildHTML = `<p style="margin-top: 5px; margin-bottom: 5px;">
-                            		<span class="target-parent" style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vehicula volutpat urna at placerat. Proin et velit et sem pulvinar scelerisque non eget magna. Pellentesque massa purus, placerat vitae facilisis et, vulputate id lorem.&nbsp;</span>
-                            		</p>`;
-
-		
-         document.getElementById("title").innerHTML = originalTitleChildHTML;
-         document.getElementById("subtitle").innerHTML = originalSubTitleChildHTML;
-         document.getElementById("detail").innerHTML = originalDetailChildHTML;
-
-         $editables = $('[contenteditable=true]');
-
-         $editables.on('input',function(e){
-         	e.preventDefault();
-         	let selection = window.getSelection(),
-         	newText = selection.focusNode.data,
-         	targetInput = selection.focusNode,
-         	targetInputName = selection.focusNode.parentNode.className,
-         	targetArea = document.getElementById(targetInputName);
-         	textNode = getTextNodesIn(targetArea),
-         	$isPasteParent = $(selection.focusNode).closest('div[contenteditable="true"]');
-         	pasteParentClass = $isPasteParent.attr("class");
-
-     		var $self = $(this);
-     		
-			textNode = document.getElementById(pasteParentClass);
-			textNode = $(textNode).find('.target-parent')[0];   
-            setTimeout(function(){
-            	var $content = $self.html();
-            	var parser = new HtmlWhitelistedSanitizer(true);
-				var sanitizedHtml = parser.sanitizeString($content);
-				console.log(textNode);
-            	$(textNode).html(sanitizedHtml);
-            		
-            },100);
+	<body>
+	    <div id="container">
+	        <div class="editable-region">
+	            <h2>Title</h2>
+	            <div class='title' contenteditable=true></div>
+	            <h2>Subtitle</h2>
+	            <div class='subtitle' contenteditable=true></div>
+	            <h2>Detail</h2>
+	            <div class='detail' contenteditable=true></div>
+	        </div>
+	        <table cellpadding="0" cellspacing="0" width="100%">
+	            <tr class="main" style="background-color: #ffffff">
+	                <td style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-line-height-rule: exactly; line-height: 4px; font-size: 4px; height: 4px; background-color: #ffffff;">
+	                    &nbsp;</td>
+	            </tr>
+	            <tr>
+	                <td height="1" valign="top">
+	                    <div id="title" class="titleContent" style="font-family: arial, helvetica, sans-serif; font-size: 24px; color: rgb(0, 0, 0); mso-line-height-rule:exactly; line-height: 1; font-weight: bold; font-style: normal;">
+	                    </div>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td height="1" valign="top">
+	                    <div id="subtitle" class="subtitleContent" style="font-family: arial, helvetica, sans-serif; font-size: 18px; color: rgb(0, 0, 0); mso-line-height-rule:exactly; line-height: 20px; font-style: normal;">
+	                        <p style="margin-top: 5px; margin-bottom: 5px;">
+	                        </p>
+	                    </div>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td height="1" valign="top">
+	                    <div id="detail" class="detailContent">
+	                    </div>
+	                </td>
+	            </tr>
+	        </table>
+	    </div>
+	    <script type="text/javascript">
+	    //const originalTitle = getTextNodesIn(document.getElementById("title")),
+	    originalTitleChildHTML = `<p class="target-parent" style="margin-top: 5px; margin-bottom: 5px;">Dietland Screening and Conversation and more Text to make it longer</p>`;
+	    //originalSubTitle  = getTextNodesIn(document.getElementById("subtitle")),
+	    originalSubTitleChildHTML = `<p style="margin-top: 5px; margin-bottom: 5px;">
+	                            			<span class="target-parent" style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 18px; mso-line-height-rule:exactly; line-height: 20px; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+	                            			</span>
+	                            		</p>`;
+	    //originalDetail = getTextNodesIn(document.getElementById("detail")),
+	    originalDetailChildHTML = `<p style="margin-top: 5px; margin-bottom: 5px;">
+	                            		<span class="target-parent" style="font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vehicula volutpat urna at placerat. Proin et velit et sem pulvinar scelerisque non eget magna. Pellentesque massa purus, placerat vitae facilisis et, vulputate id lorem.&nbsp;</span>
+	                            		</p>`;
 
 
-         
-         	if(!newText || newText == undefined || newText == null || targetInput.innerText == "") {
-         		targetInputName = selection.focusNode.className;
-         		targetArea = document.getElementById(targetInputName);
-				switch(targetInputName) {
-					case "title":
-						targetArea.innerHTML = originalTitleChildHTML;
-						break;
-					case "subtitle":
-						targetArea.innerHTML = originalSubTitleChildHTML;
-						break;
-					case "detail":
-						targetArea.innerHTML = originalDetailChildHTML;
-						break;
-					default:
-						break;
-				}
-			}
-         });
+	    document.getElementById("title").innerHTML = originalTitleChildHTML;
+	    document.getElementById("subtitle").innerHTML = originalSubTitleChildHTML;
+	    document.getElementById("detail").innerHTML = originalDetailChildHTML;
+
+	    $editables = $('[contenteditable=true]');
+
+	    $editables.on('input', function(e) {
+	        e.preventDefault();
+	        let selection = window.getSelection(),
+	            newText = selection.focusNode.data,
+	            targetInput = selection.focusNode,
+	            targetInputName = selection.focusNode.parentNode.className,
+	            targetArea = document.getElementById(targetInputName);
+	        textNode = getTextNodesIn(targetArea),
+	            $isPasteParent = $(selection.focusNode).closest('div[contenteditable="true"]');
+	        pasteParentClass = $isPasteParent.attr("class");
+
+	        var $self = $(this);
+
+	        textNode = document.getElementById(pasteParentClass);
+	        textNode = $(textNode).find('.target-parent')[0];
+	        setTimeout(function() {
+	            var $content = $self.html();
+	            var parser = new HtmlWhitelistedSanitizer(true);
+	            var sanitizedHtml = parser.sanitizeString($content);
+	            console.log(textNode);
+	            $(textNode).html(sanitizedHtml);
+
+	        }, 100);
 
 
-         function getTextNodesIn(node, includeWhitespaceNodes) {
- 	    	var textNodes = [], nonWhitespaceMatcher = /\S/;
- 	    	
 
-			function getTextNodes(node) {
-				const $node = $(node);
-				const parentElement = $node.data('originalParent', $node.parent());
-				
-					if(node == null) {
-						$node.appendTo( $node.data( 'originalParent' ) );
-					} else if (node.nodeType == 3) {
-				        if (includeWhitespaceNodes || nonWhitespaceMatcher.test(node.nodeValue)) {
-				            textNodes.push(node);
-				        }
-				    } else {
-				        for (var i = 0, len = node.childNodes.length; i < len; ++i) {
-				            getTextNodes(node.childNodes[i]);
-				        }
-				    }
-				}
-
-			getTextNodes(node);
-			return textNodes;
-		}
-
-		/**
-		 * From https://www.quaxio.com/html_white_listed_sanitizer/
-		 * Sanitizer which filters a set of whitelisted tags, attributes and css.
-		 * For now, the whitelist is small but can be easily extended.
-		 *
-		 * @param bool whether to escape or strip undesirable content.
-		 * @param map of allowed tag-attribute-attribute-parsers.
-		 * @param array of allowed css elements.
-		 * @param array of allowed url scheme
-		 */
-		function HtmlWhitelistedSanitizer(escape, tags, css, urls) {
-		  this.escape = escape;
-		  this.allowedTags = tags;
-		  this.allowedCss = css;
-
-		  // Use the browser to parse the input but create a new HTMLDocument.
-		  // This won't evaluate any potentially dangerous scripts since the element
-		  // isn't attached to the window's document. It also won't cause img.src to
-		  // preload images.
-		  //
-		  // To be extra cautious, you can dynamically create an iframe, pass the
-		  // input to the iframe and get back the sanitized string.
-		  this.doc = document.implementation.createHTMLDocument();
-
-		  if (urls == null) {
-		    urls = ['http://', 'https://'];
-		  }
-
-		  if (this.allowedTags == null) {
-		    // Configure small set of default tags
-		    var unconstrainted = function(x) { return x; };
-		    var globalAttributes = {
-		      'dir': unconstrainted,
-		      'lang': unconstrainted,
-		      'title': unconstrainted
-		    };
-		    var url_sanitizer = HtmlWhitelistedSanitizer.makeUrlSanitizer(urls);
-		    this.allowedTags = {
-		      'a': HtmlWhitelistedSanitizer.mergeMap(globalAttributes, {
-		          // 'download': unconstrainted,
-		          'href': url_sanitizer,
-		          // 'hreflang': unconstrainted,
-		          // 'ping': url_sanitizer,
-		          // 'rel': unconstrainted,
-		          'target': unconstrainted,
-		          // 'type': unconstrainted
-		        }),
-		      // 'img': HtmlWhitelistedSanitizer.mergeMap(globalAttributes, {
-		      //     'alt': unconstrainted,
-		      //     'height': unconstrainted,
-		      //     'src': url_sanitizer,
-		      //     'width': unconstrainted
-		      //   }),
-		      // 'h2': unconstrainted,
-		      'p': globalAttributes,
-		      'div': unconstrainted,
-		      'span': globalAttributes,
-		      'br': globalAttributes,
-		      'b': globalAttributes,
-		      'i': globalAttributes,
-		      'u': globalAttributes,
-		      'ul': globalAttributes,
-		      'ol': globalAttributes,
-		      'li': globalAttributes
-		    };
-		  }
-		  if (this.allowedCss == null) {
-		    // Small set of default css properties
-		    //this.allowedCss = ['border', 'margin', 'padding'];
-		  }
-		}
-
-		HtmlWhitelistedSanitizer.makeUrlSanitizer = function(allowed_urls) {
-		  return function(str) {
-		    if (!str) { return ''; }
-		    for (var i in allowed_urls) {
-		      console.log(allowed_urls[i]);
-		      if (str.startsWith(allowed_urls[i])) {
-		        return str;
-		      }
-		    }
-		    return '';
-		  };
-		}
-
-		HtmlWhitelistedSanitizer.mergeMap = function(/*...*/) {
-		  var r = {};
-		  for (var arg in arguments) {
-		    for (var i in arguments[arg]) {
-		      r[i] = arguments[arg][i];
-		    }
-		  }
-		  return r;
-		}
-
-		HtmlWhitelistedSanitizer.prototype.sanitizeString = function(input) {
-		  var div = this.doc.createElement('div');
-		  div.innerHTML = input;
-
-		  // Return the sanitized version of the node.
-		  return this.sanitizeNode(div).innerHTML;
-		}
-
-		HtmlWhitelistedSanitizer.prototype.sanitizeNode = function(node) {
-		  // Note: <form> can have it's nodeName overriden by a child node. It's
-		  // not a big deal here, so we can punt on this.
-		  var node_name = node.nodeName.toLowerCase();
-		  if (node_name == '#text') {
-		    // text nodes are always safe
-		    return node;
-		  }
-		  if (node_name == '#comment') {
-		    // always strip comments
-		    return this.doc.createTextNode('');
-		  }
-		  if (!this.allowedTags.hasOwnProperty(node_name)) {
-		    // this node isn't allowed
-		    console.log("forbidden node: " + node_name);
-		    if (this.escape) {
-		    	//grabs innerHTML to display
-		      return this.doc.createTextNode(node.innerHTML);
-		    }
-		    return this.doc.createTextNode('');
-		  }
-
-		  // create a new node
-		  var copy = this.doc.createElement(node_name);
-
-		  // copy the whitelist of attributes using the per-attribute sanitizer
-		  for (var n_attr=0; n_attr < node.attributes.length; n_attr++) {
-		    var attr = node.attributes.item(n_attr).name;
-		    if (this.allowedTags[node_name].hasOwnProperty(attr)) {
-		      var sanitizer = this.allowedTags[node_name][attr];
-		      copy.setAttribute(attr, sanitizer(node.getAttribute(attr)));
-		    }
-		  }
-		  // copy the whitelist of css properties
-		  for (var css in this.allowedCss) {
-		    copy.style[this.allowedCss[css]] = node.style[this.allowedCss[css]];
-		  }
-
-		  // recursively sanitize child nodes
-		  while (node.childNodes.length > 0) {
-		    var child = node.removeChild(node.childNodes[0]);
-		    copy.appendChild(this.sanitizeNode(child));
-		  }
-		  return copy;
-		}
+	        if (!newText || newText == undefined || newText == null || targetInput.innerText == "") {
+	            targetInputName = selection.focusNode.className;
+	            targetArea = document.getElementById(targetInputName);
+	            switch (targetInputName) {
+	                case "title":
+	                    targetArea.innerHTML = originalTitleChildHTML;
+	                    break;
+	                case "subtitle":
+	                    targetArea.innerHTML = originalSubTitleChildHTML;
+	                    break;
+	                case "detail":
+	                    targetArea.innerHTML = originalDetailChildHTML;
+	                    break;
+	                default:
+	                    break;
+	            }
+	        }
+	    });
 
 
-		
-	</script>
-</body>
+	    function getTextNodesIn(node, includeWhitespaceNodes) {
+	        var textNodes = [],
+	            nonWhitespaceMatcher = /\S/;
+
+
+	        function getTextNodes(node) {
+	            const $node = $(node);
+	            const parentElement = $node.data('originalParent', $node.parent());
+
+	            if (node == null) {
+	                $node.appendTo($node.data('originalParent'));
+	            } else if (node.nodeType == 3) {
+	                if (includeWhitespaceNodes || nonWhitespaceMatcher.test(node.nodeValue)) {
+	                    textNodes.push(node);
+	                }
+	            } else {
+	                for (var i = 0, len = node.childNodes.length; i < len; ++i) {
+	                    getTextNodes(node.childNodes[i]);
+	                }
+	            }
+	        }
+
+	        getTextNodes(node);
+	        return textNodes;
+	    }
+
+	    /**
+	     * From https://www.quaxio.com/html_white_listed_sanitizer/
+	     * Sanitizer which filters a set of whitelisted tags, attributes and css.
+	     * For now, the whitelist is small but can be easily extended.
+	     *
+	     * @param bool whether to escape or strip undesirable content.
+	     * @param map of allowed tag-attribute-attribute-parsers.
+	     * @param array of allowed css elements.
+	     * @param array of allowed url scheme
+	     */
+	    function HtmlWhitelistedSanitizer(escape, tags, css, urls) {
+	        this.escape = escape;
+	        this.allowedTags = tags;
+	        this.allowedCss = css;
+
+	        // Use the browser to parse the input but create a new HTMLDocument.
+	        // This won't evaluate any potentially dangerous scripts since the element
+	        // isn't attached to the window's document. It also won't cause img.src to
+	        // preload images.
+	        //
+	        // To be extra cautious, you can dynamically create an iframe, pass the
+	        // input to the iframe and get back the sanitized string.
+	        this.doc = document.implementation.createHTMLDocument();
+
+	        if (urls == null) {
+	            urls = ['http://', 'https://'];
+	        }
+
+	        if (this.allowedTags == null) {
+	            // Configure small set of default tags
+	            var unconstrainted = function(x) { return x; };
+	            var globalAttributes = {
+	                'dir': unconstrainted,
+	                'lang': unconstrainted,
+	                'title': unconstrainted
+	            };
+	            var url_sanitizer = HtmlWhitelistedSanitizer.makeUrlSanitizer(urls);
+	            this.allowedTags = {
+	                'a': HtmlWhitelistedSanitizer.mergeMap(globalAttributes, {
+	                    // 'download': unconstrainted,
+	                    'href': url_sanitizer,
+	                    // 'hreflang': unconstrainted,
+	                    // 'ping': url_sanitizer,
+	                    // 'rel': unconstrainted,
+	                    'target': unconstrainted,
+	                    // 'type': unconstrainted
+	                }),
+	                // 'img': HtmlWhitelistedSanitizer.mergeMap(globalAttributes, {
+	                //     'alt': unconstrainted,
+	                //     'height': unconstrainted,
+	                //     'src': url_sanitizer,
+	                //     'width': unconstrainted
+	                //   }),
+	                // 'h2': unconstrainted,
+	                'p': globalAttributes,
+	                'div': unconstrainted,
+	                'span': globalAttributes,
+	                'br': globalAttributes,
+	                'b': globalAttributes,
+	                'i': globalAttributes,
+	                'u': globalAttributes,
+	                'ul': globalAttributes,
+	                'ol': globalAttributes,
+	                'li': globalAttributes
+	            };
+	        }
+	        if (this.allowedCss == null) {
+	            // Small set of default css properties
+	            //this.allowedCss = ['border', 'margin', 'padding'];
+	        }
+	    }
+
+	    HtmlWhitelistedSanitizer.makeUrlSanitizer = function(allowed_urls) {
+	        return function(str) {
+	            if (!str) { return ''; }
+	            for (var i in allowed_urls) {
+	                console.log(allowed_urls[i]);
+	                if (str.startsWith(allowed_urls[i])) {
+	                    return str;
+	                }
+	            }
+	            return '';
+	        };
+	    }
+
+	    HtmlWhitelistedSanitizer.mergeMap = function( /*...*/ ) {
+	        var r = {};
+	        for (var arg in arguments) {
+	            for (var i in arguments[arg]) {
+	                r[i] = arguments[arg][i];
+	            }
+	        }
+	        return r;
+	    }
+
+	    HtmlWhitelistedSanitizer.prototype.sanitizeString = function(input) {
+	        var div = this.doc.createElement('div');
+	        div.innerHTML = input;
+
+	        // Return the sanitized version of the node.
+	        return this.sanitizeNode(div).innerHTML;
+	    }
+
+	    HtmlWhitelistedSanitizer.prototype.sanitizeNode = function(node) {
+	        // Note: <form> can have it's nodeName overriden by a child node. It's
+	        // not a big deal here, so we can punt on this.
+	        var node_name = node.nodeName.toLowerCase();
+	        if (node_name == '#text') {
+	            // text nodes are always safe
+	            return node;
+	        }
+	        if (node_name == '#comment') {
+	            // always strip comments
+	            return this.doc.createTextNode('');
+	        }
+	        if (!this.allowedTags.hasOwnProperty(node_name)) {
+	            // this node isn't allowed
+	            console.log("forbidden node: " + node_name);
+	            if (this.escape) {
+	                //grabs innerHTML to display
+	                return this.doc.createTextNode(node.innerHTML);
+	            }
+	            return this.doc.createTextNode('');
+	        }
+
+	        // create a new node
+	        var copy = this.doc.createElement(node_name);
+
+	        // copy the whitelist of attributes using the per-attribute sanitizer
+	        for (var n_attr = 0; n_attr < node.attributes.length; n_attr++) {
+	            var attr = node.attributes.item(n_attr).name;
+	            if (this.allowedTags[node_name].hasOwnProperty(attr)) {
+	                var sanitizer = this.allowedTags[node_name][attr];
+	                copy.setAttribute(attr, sanitizer(node.getAttribute(attr)));
+	            }
+	        }
+	        // copy the whitelist of css properties
+	        for (var css in this.allowedCss) {
+	            copy.style[this.allowedCss[css]] = node.style[this.allowedCss[css]];
+	        }
+
+	        // recursively sanitize child nodes
+	        while (node.childNodes.length > 0) {
+	            var child = node.removeChild(node.childNodes[0]);
+	            copy.appendChild(this.sanitizeNode(child));
+	        }
+	        return copy;
+	    }
+	    </script>
+	</body>
 
 </html>
