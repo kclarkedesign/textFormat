@@ -253,6 +253,7 @@
 	            // text nodes are always safe
 	            return node;
 	        }
+	        
 	        if (node_name == '#comment') {
 	            // always strip comments
 	            return this.doc.createTextNode('');
